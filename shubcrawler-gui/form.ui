@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>572</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SHub File Grabber</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QLabel" name="noticeTxt">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>721</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Noto Sans</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;The UI hasn't been properly designed yet, so here's a temporary UI for now. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+  </widget>
+  <widget class="QTableView" name="fileTbl">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>270</y>
+     <width>781</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="sizeIncrement">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <attribute name="horizontalHeaderCascadingSectionResizes">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QPlainTextEdit" name="urlTb">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>781</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="documentTitle">
+    <string/>
+   </property>
+   <property name="readOnly">
+    <bool>false</bool>
+   </property>
+   <property name="plainText">
+    <string notr="true"/>
+   </property>
+   <property name="placeholderText">
+    <string>Url will appear here when a file is captured through the proxy</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="proxyNoticeTxt">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>781</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Noto Sans</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>**Note**: You need to launch your browser with the following arguments: `--proxy-server=&quot;http://127.0.0.1:8080&quot; --disk-cache-size=1` for the proxy to work correctly.
+
+**Example:**
++ Google Chrome (Windows): `chrome --proxy-server=&quot;http://127.0.0.1:8080&quot; --disk-cache-size=1`
++ Google Chrome (Arch Linux): `google-chrome-stable --proxy-server=&quot;http://127.0.0.1:8080&quot; --disk-cache-size=1`</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::MarkdownText</enum>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
