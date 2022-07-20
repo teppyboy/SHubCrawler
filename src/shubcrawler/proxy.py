@@ -2,6 +2,7 @@ import asyncio
 import logging
 import threading
 import socket
+import requests
 from shubcrawler.grabber import parse
 from mitmproxy.http import HTTPFlow
 from contextlib import closing
@@ -30,6 +31,7 @@ class ProxyManager:
         self._mitm = None
         self._loop = self._create_loop()
         self.proxy_port = self._get_free_port()
+        self.proxy_host = "127.0.0.1"
         self._mitm_options = self._create_mitmproxy_options()
         self._logger = logging.getLogger("shub-file-grabber")
 
@@ -62,7 +64,7 @@ class ProxyManager:
         Create a new configuration for mitmproxy
         """
         options = Options(
-            listen_host='127.0.0.1',
+            listen_host=self.proxy_host,
             listen_port=self.proxy_port
         )
         return options
@@ -88,19 +90,18 @@ class ProxyManager:
         It is optional to use this function unless you want to set mitmproxy port before starting proxy.
         :return:
         """
-        asyncio.run_coroutine_threadsafe(self._create_mitmdump(), self._loop)
+        return asyncio.run_coroutine_threadsafe(self._create_mitmdump(), self._loop)
 
     def set_proxy_port(self, port: int):
         """
         Set the proxy port to the specified one.
 
-        You must run create_proxy before this or it'll raise an error about mitmproxy doesn't exist.
-
         :param port: Port for the proxy to use, must be free.
         """
         if not self._mitm:
-            self._logger.warning("mitmproxy hasn't been created yet.")
-            raise RuntimeError("mitmproxy doesn't exist.")
+            proxy = self.create_proxy()
+            # Blocking so we can wait until the proxy is created.
+            proxy.result()
         self._mitm.options.update(listen_port=port)
 
     def start_proxy(self, port: int = 0):
@@ -117,4 +118,15 @@ class ProxyManager:
             return
         self._mitm.shutdown()
         del self._mitm
-        self._loop.stop()
+
+    def is_certificate_installed(self) -> bool:
+        proxies = {
+            "http": "http://{}:{}".format(self.proxy_host, self.proxy_port),
+            "https": "http://{}:{}".format(self.proxy_host, self.proxy_port)
+        }
+        try:
+            # example.com is HTTPS.
+            _ = requests.get("https://example.com", proxies=proxies)
+        except requests.exceptions.SSLError:
+            return False
+        return True
